@@ -1,0 +1,98 @@
+# MamaCare Triage — Problem & Full Feature Breakdown
+
+**Track:** Better Healthcare (SDG 3: Good Health) — Build with Gemma 4: GenAI for SDGs
+
+---
+
+## 1. The Problem
+
+Rural clinics in Nigeria (and similar low-resource settings) face a specific combination of challenges that most existing AI health tools ignore:
+
+- **Staffing gap:** Clinics are usually run by community health workers (CHWs), not doctors, who need decision support rather than just information.
+- **Connectivity gap:** Internet access is unreliable or absent, so cloud-dependent tools fail when needed most.
+- **Literacy/language gap:** Many CHWs are more comfortable in a local language (Yoruba, Hausa, Igbo, Pidgin) than in written English, and existing tools are text/English-only.
+- **Resource visibility gap:** Health workers often don't have a fast way to check what drugs/supplies are actually available at their own clinic before recommending treatment.
+- **Continuity gap:** Patient visits are usually treated as isolated events, so warning trends (e.g. rising blood pressure over several visits) get missed.
+- **Existing tools don't fit:** Apps like Ada Health are text-only, single-turn, assume constant connectivity and English literacy — none of which match the reality of a rural clinic.
+
+The specific consequence this project targets: **preventable maternal and newborn deaths**, one of the most severe gaps under SDG 3 in Nigeria, often caused by delayed recognition of danger signs rather than lack of willingness to act.
+
+---
+
+## 2. The Solution — One Line
+
+An offline-first, multimodal AI triage assistant, powered by Gemma 4, that lets a CHW photograph or describe a symptom and get back a clear, actionable, locally-relevant recommendation — including whether to refer to a hospital immediately.
+
+---
+
+## 3. Full Feature List
+
+### 3.1 Multimodal Symptom Input
+- CHW can upload/take a **photo** of a visible symptom (e.g. newborn jaundice in the eyes, a rash, a wound, swelling).
+- CHW can add **text notes** describing what they observe.
+- *(Stretch goal, not MVP):* CHW can record a short **audio clip** (e.g. baby's cough or breathing sounds) for Gemma to analyze alongside the photo and text.
+- All inputs are sent together to Gemma 4 in a single multimodal reasoning call — not handled as separate, disconnected steps.
+
+### 3.2 AI-Powered Triage Reasoning
+- Gemma 4 analyzes the combined input and returns:
+  - A likely condition or set of possibilities
+  - An urgency level: **routine / needs monitoring / urgent referral**
+  - A short, plain-language explanation the CHW can act on immediately
+- Reasoning is shown transparently on screen, not as a black-box verdict.
+
+### 3.3 Function Calling — Real Actions, Not Just Advice
+Gemma doesn't just talk — it calls tools to actually do things:
+- **`calculate_dosage(weight, age, medication)`** — returns a safe medication dosage based on the specific patient's weight and age.
+- **`check_drug_stock(medication)`** — checks a local, clinic-specific stock file to confirm whether the recommended medication is actually available *(stretch goal beyond MVP)*.
+- **`flag_danger_sign(symptoms)`** — checks the case against WHO and Nigerian maternal/newborn danger-sign criteria and returns a clear true/false plus reasoning.
+- If a danger sign is flagged, the app displays a large, impossible-to-miss **"REFER TO HOSPITAL NOW"** alert.
+
+### 3.4 Patient History & Continuity
+- Every visit is logged locally under the patient's ID: date, symptoms, Gemma's assessment, and action taken.
+- On a repeat visit, the CHW sees the patient's prior visit history at a glance.
+- This turns triage from a one-off snapshot into a continuous record — surfacing trends a single visit would miss (e.g. worsening symptoms across visits).
+
+### 3.5 Local-Language Accessibility
+- Guidance is shown in **English and one local language (Yoruba)** as text for the MVP.
+- *(Stretch goal):* Guidance is also **spoken aloud** via text-to-speech in the local language, supporting CHWs with lower literacy, with room to expand to Hausa, Igbo, and Pidgin later.
+
+### 3.6 Offline-First Design
+- The app is built to function without a live internet connection wherever possible.
+- Patient records and clinic stock data are stored **locally**, not dependent on a remote database.
+- The AI model itself runs via a **local/quantized Gemma 4 build (`gemma-4-E2B-it-GGUF`)** rather than a cloud-only API, directly supporting real rural-clinic conditions rather than just simulating them for a demo.
+
+---
+
+## 4. Why This Is a Step Up From Typical Submissions
+
+| Typical hackathon health-AI project | This project |
+|---|---|
+| Text-only chatbot | Multimodal: photo + text (+ audio as stretch) |
+| Single-turn Q&A | Agent that reasons, calls tools, and remembers |
+| Generic advice | Concrete, actionable outputs: dosage, referral flag, stock check |
+| Assumes internet + English | Offline-first, local language support |
+| One-off interaction | Continuous patient history across visits |
+
+---
+
+## 5. MVP vs. Stretch Goals (Full Honesty for the Judges)
+
+**MVP (must work for the demo):**
+1. Patient intake with photo + text
+2. Gemma 4 multimodal triage output
+3. Two function-calling tools: dosage calculator, danger-sign flag
+4. Basic patient history log
+5. Local-language (Yoruba) text output
+
+**Stretch goals (build only if time allows):**
+- Audio symptom input/analysis
+- Drug-stock lookup tool
+- Real text-to-speech voice output
+- Multiple local languages
+- Full on-device offline inference in the deployed demo (vs. local inference used during development)
+
+---
+
+## 6. Summary Statement (for pitch/writeup use)
+
+MamaCare Triage is an offline-first, multimodal AI health assistant built on Gemma 4 that helps community health workers in rural clinics triage maternal and newborn health issues directly from a phone — using photos and local-language guidance, backed by real function-calling tools for dosage, danger-sign detection, and (as the project matures) stock checks and patient history — targeting one of Nigeria's most severe and preventable SDG 3 gaps.

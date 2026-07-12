@@ -1,0 +1,95 @@
+Build with Gemma: GenAI for SDGs Kwara State University
+Leverage Google DeepMind's open models to build innovative solution prototypes for the UN Sustainable Development Goals
+
+Join Hackathon
+more_horiz
+Build with Gemma: GenAI for SDGs Kwara State University
+Overview
+The next generation of open models is here. Welcome to the Gemma 4 Hackathon Sprint, a fast-paced, 1-day in-person hackathon where you'll get hands-on with the most capable open models from Google DeepMind.
+
+This hackathon is not about writing polished, production-ready code. It is a sprint to experiment, learn, break things, and build great solutions to real-world problems in just a few hours. You have access to the newly released Gemma 4 models. Team up, brainstorm a wild idea, hack a prototype, and pitch before the clock runs out. Bring your laptop, your boldest ideas, and let's build something amazing together!
+
+Start
+2 days ago
+Close
+16 days to go
+Description
+link
+keyboard_arrow_up
+With the release of Gemma 4, a new family of open models is officially in your hands. Leverage local frontier intelligence, native function calling, and multimodal understanding to tackle core developer challenges.
+
+1. Better Healthcare (SDG 3: Good Health)
+
+The Idea: Make an offline health helper for rural clinics.
+
+How it works: Use Gemma to build a smart assistant that works directly on regular phones without needing the internet. It can help local health workers check patient symptoms and organize health records easily.
+
+2. Smarter Education (SDG 4: Quality Education) The Idea: Build a smart, personal AI tutor.
+
+How it works: Create an app that helps students learn at their own pace. It can act like a teacher's assistant that automatically finds the right study materials and makes quick practice quizzes for students who need extra help.
+
+3. Safe Communities (SDG 11 & 13: Climate & Cities)
+
+The Idea: Create a local advice and warning system.
+
+How it works: Run Gemma on small, cheap computers to track things like crop health or flood risks. It can give instant advice to local farmers and community leaders, even if the main power or internet goes down.
+
+4. Fair Access for All (SDG 10: Reduced Inequalities)
+
+The Idea: Build a tool that breaks down language barriers.
+
+How it works: Make an app that takes confusing government, legal, or financial information and translates it into simple words or local languages, so everyone can easily understand and use it.
+
+Your Goal
+
+Tell a story. Show us the problem and how your Gemma 4 application solves it in a powerful way.
+
+While your technical execution is vital, the ability to communicate your vision through a compelling writeup and pitch is what will set the winners apart.
+
+Submission Requirements
+link
+keyboard_arrow_up
+A valid submission must contain the following:
+
+Kaggle Writeup
+Attached Public Code Repository
+Attached Live Demo (or Clonable Notebook)
+Your final submission must be made prior to the deadline. Any un-submitted or draft Writeups by the hackathon deadline will not be considered by the Judges.
+
+To create a new Writeup, click on the "New Writeup" button here. After you have saved your Writeup, you should see a "Submit" button in the top right corner. Each team is limited to submitting only a single Writeup, but that same Writeup can be un-submitted, edited, and re-submitted as many times as you'd like before the deadline.
+
+Note: If you attach a private Kaggle Resource to your public Kaggle Writeup, your private Resource will automatically be made public after the deadline.
+
+1. Kaggle Writeup
+
+The Proof of Work. This report is your technical verification. It must clearly explain the architecture of your project, how you specifically used Gemma 4, the challenges you overcame in this 1-day sprint, and why your technical choices were the right ones. Its primary purpose is to prove to the judges that your demo is backed by real engineering and that your solution can serve as a strong foundational asset.
+
+The Kaggle Writeup serves as your project report. This should include a title, subtitle, and a detailed analysis of your submission. You must select a Track for your Writeup in order to submit. Your Writeup should not exceed 1,500 words. Submissions over this limit may be subject to penalty.
+
+The below assets must be attached to the Writeup to be eligible:
+
+Public Code Repository
+
+The "Source of Truth". Provide a link to a public repository (e.g., GitHub, Kaggle Notebook). The code must be well-documented and clearly show the implementation of Gemma 4. This is non-negotiable and will be used to validate the authenticity of your project.
+
+Your code repository should be publicly accessible and not require a login or paywall. If you use a private Kaggle Notebook, it will automatically be made public after the deadline.
+
+Provide a link to your public code in the section "Attachments" of your writeup, under "Project Links".
+
+Live Demo
+
+A URL or files for your working demo (this can be a hosted web app, an interactive terminal recording, or a fully functional Kaggle Notebook). This allows judges to experience your project firsthand. It should be publicly accessible and not require a login or paywall.
+
+If you are providing a link or files, you can do so in the section "Attachments" of your writeup.
+
+See the naming guidelines if you are creating a new Gemma model variants.
+
+Tracks and Awards
+link
+keyboard_arrow_up
+Main Track · $1,000
+
+Better Healthcare (SDG 3: Good Health)
+Smarter Education (SDG 4: Quality Education)
+Safe Communities (SDG 11 & 13: Climate & Cities)
+Fair Access for All (SDG 10: Reduced Inequalities)

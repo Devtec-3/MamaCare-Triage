@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "MamaCare Triage"
+version = "1.0.0"
+id = "artifacts/mamacare"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18167
+
+[services.development]
+run = "pnpm --filter @workspace/mamacare run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/mamacare", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/mamacare/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18167"
+BASE_PATH = "/"

@@ -1,0 +1,35 @@
+Build with Gemma 4 — GenAI for SDGs
+Project Proposal: Multimodal Maternal & Child Health Triage Agent
+Track: Better Healthcare (SDG 3 — Good Health)
+
+1. Problem
+Rural clinics in Nigeria and similar settings are often staffed by community health workers (CHWs) rather than doctors, with unreliable internet access and thin drug/equipment stock. Maternal and newborn mortality remains one of the most severe gaps under SDG 3, and most existing AI health tools (Ada Health, generic symptom-checker chatbots) are text-only, single-turn, and assume literacy in English and continuous connectivity — none of which hold in this setting.
+2. Idea
+An offline-first, multimodal AI health assistant, built on Gemma 4, that helps CHWs triage maternal and newborn health issues directly from a basic Android phone — using photos, audio, and voice, in local language, with real actions (not just advice).
+3. What Makes This New
+Multimodal input, not just text — the CHW photographs a visible symptom (e.g. newborn jaundice in the eyes, a wound, a rash, swelling) or records a short audio clip (a baby's cough or breathing sounds). Gemma 4 reasons over image + audio + text together, instead of a text-only chat form.
+Function-calling for real actions — Gemma calls tools to log a structured patient record, check a local drug-stock file for what is actually available at that clinic, calculate dosage from weight and age, and auto-flag “refer to hospital now” cases using WHO / Nigerian antenatal danger-sign criteria.
+Continuity over time — instead of one-off triage, the app keeps a lightweight offline patient history, so a CHW sees “this is visit 3, blood pressure is rising” rather than treating every visit in isolation.
+Local-language voice output — many CHWs have low literacy, so guidance is spoken back in Yoruba, Hausa, Igbo, or Pidgin instead of shown as English text.
+Together, this is an agent with tools, memory, and multimodal perception — not a single-turn Q&A demo, which is what most competing hackathon entries are likely to build.
+4. How It Works (Flow)
+• CHW opens the app on a basic Android phone (offline-capable, on-device Gemma 4 inference).
+• CHW takes a photo and/or records audio of the symptom, plus a few quick text/voice details (age, weight, days since symptom onset).
+• Gemma 4 analyzes the multimodal input and reasons about likely conditions and urgency.
+• Gemma calls local tools:
+◦ Dosage calculator (using patient weight/age)
+◦ Local drug-stock lookup (what's actually available at this clinic)
+◦ Danger-sign flag (WHO / Nigerian antenatal + newborn criteria) → referral trigger
+◦ Patient history log (offline-first local storage)
+• The assistant speaks back guidance in the CHW's preferred local language.
+• If a danger sign is detected, the app clearly flags an urgent referral to the nearest hospital.
+5. Why This Should Win
+Depth over breadth — most teams will demo single-turn text Q&A; this demonstrates an agent with tools, memory, and multimodal perception, which is a materially higher technical bar.
+Real-world grounding — targets one of Nigeria's most severe SDG 3 gaps (maternal/newborn mortality) with outputs that are directly actionable (dosage, referral, stock check), not generic advice.
+True offline-first design — built for the actual constraints of rural clinics (no reliable power or internet), not just a cloud demo.
+Clear technical story for the writeup — each Gemma 4 capability (multimodal understanding, native function calling) maps directly to a concrete feature, which is easy to explain and defend to judges.
+6. Scope for the 1-Day Build (Suggested)
+Build for real: Gemma 4 multimodal input (image + text) for symptom analysis; 2–3 function-calling tools (dosage calculator, danger-sign flag, drug-stock lookup using a small mock JSON “stock file”); a simple patient history log (local storage).
+Stub / fake convincingly: audio-symptom analysis can be a scripted demo path if time is short; local-language voice output can start with 1 language (e.g. Yoruba or Pidgin) rather than all four; “true offline on-device inference” can be simulated in the demo if full on-device deployment isn't feasible in one day — be transparent about this in the writeup.
+Deliverables needed for submission: a public code repo (well-documented, showing the Gemma 4 implementation), a live demo or clonable notebook, and a Kaggle Writeup (max 1,500 words) explaining architecture, Gemma 4 usage, challenges, and technical choices.
+Prepared for internal team planning — Devtec Technology
