@@ -3,13 +3,19 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: MamaCare Triage API — Maternal & Child Health Triage for Community Health Workers
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: patients
+    description: Patient records
+  - name: visits
+    description: Triage visit records
+  - name: dashboard
+    description: Dashboard statistics
 paths:
   /healthz:
     get:
@@ -24,6 +30,202 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /patients:
+    get:
+      operationId: listPatients
+      tags: [patients]
+      summary: List all patients
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of patients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Patient"
+    post:
+      operationId: createPatient
+      tags: [patients]
+      summary: Create a new patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatientInput"
+      responses:
+        "201":
+          description: Created patient
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Patient"
+
+  /patients/{id}:
+    get:
+      operationId: getPatient
+      tags: [patients]
+      summary: Get patient with visit history
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Patient with recent visit
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatientWithVisits"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    patch:
+      operationId: updatePatient
+      tags: [patients]
+      summary: Update a patient record
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatientUpdate"
+      responses:
+        "200":
+          description: Updated patient
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Patient"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /patients/{id}/visits:
+    get:
+      operationId: listPatientVisits
+      tags: [visits]
+      summary: List all visits for a patient
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of visits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Visit"
+    post:
+      operationId: createVisit
+      tags: [visits]
+      summary: Submit a new triage case (calls Gemini AI)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VisitInput"
+      responses:
+        "201":
+          description: Triage result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Visit"
+        "404":
+          description: Patient not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /visits/{id}:
+    get:
+      operationId: getVisit
+      tags: [visits]
+      summary: Get a single visit record
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Visit record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Visit"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /dashboard/stats:
+    get:
+      operationId: getDashboardStats
+      tags: [dashboard]
+      summary: Dashboard summary statistics
+      responses:
+        "200":
+          description: Dashboard stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardStats"
+
+  /dashboard/recent-visits:
+    get:
+      operationId: getRecentVisits
+      tags: [dashboard]
+      summary: Recent triage visits across all patients
+      responses:
+        "200":
+          description: Recent visits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VisitWithPatient"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +236,225 @@ components:
       required:
         - status
 
+    Patient:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        ageYears:
+          type: ["integer", "null"]
+        weightKg:
+          type: ["number", "null"]
+        sex:
+          type: ["string", "null"]
+        village:
+          type: ["string", "null"]
+        phoneNumber:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - ageYears
+        - weightKg
+        - sex
+        - village
+        - phoneNumber
+        - createdAt
+
+    PatientInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        ageYears:
+          type: integer
+        weightKg:
+          type: number
+        sex:
+          type: string
+        village:
+          type: string
+        phoneNumber:
+          type: string
+      required:
+        - name
+
+    PatientUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        ageYears:
+          type: integer
+        weightKg:
+          type: number
+        sex:
+          type: string
+        village:
+          type: string
+        phoneNumber:
+          type: string
+
+    PatientWithVisits:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        ageYears:
+          type: ["integer", "null"]
+        weightKg:
+          type: ["number", "null"]
+        sex:
+          type: ["string", "null"]
+        village:
+          type: ["string", "null"]
+        phoneNumber:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+        visits:
+          type: array
+          items:
+            $ref: "#/components/schemas/Visit"
+      required:
+        - id
+        - name
+        - ageYears
+        - weightKg
+        - sex
+        - village
+        - phoneNumber
+        - createdAt
+        - visits
+
+    Visit:
+      type: object
+      properties:
+        id:
+          type: integer
+        patientId:
+          type: integer
+        symptoms:
+          type: string
+        photoBase64:
+          type: ["string", "null"]
+        urgency:
+          type: string
+          description: "routine | needs_monitoring | urgent_referral"
+        conditions:
+          type: string
+        recommendation:
+          type: string
+        dosage:
+          type: ["string", "null"]
+        dangerSignDetected:
+          type: boolean
+        referralRequired:
+          type: boolean
+        guidanceEnglish:
+          type: string
+        guidanceYoruba:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - patientId
+        - symptoms
+        - photoBase64
+        - urgency
+        - conditions
+        - recommendation
+        - dosage
+        - dangerSignDetected
+        - referralRequired
+        - guidanceEnglish
+        - guidanceYoruba
+        - createdAt
+
+    VisitInput:
+      type: object
+      properties:
+        symptoms:
+          type: string
+          minLength: 1
+        photoBase64:
+          type: string
+          description: Base64-encoded image (JPEG or PNG)
+        medications:
+          type: string
+          description: Comma-separated list of medications to check dosage for
+      required:
+        - symptoms
+
+    VisitWithPatient:
+      type: object
+      properties:
+        id:
+          type: integer
+        patientId:
+          type: integer
+        patientName:
+          type: string
+        symptoms:
+          type: string
+        urgency:
+          type: string
+        dangerSignDetected:
+          type: boolean
+        referralRequired:
+          type: boolean
+        guidanceEnglish:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - patientId
+        - patientName
+        - symptoms
+        - urgency
+        - dangerSignDetected
+        - referralRequired
+        - guidanceEnglish
+        - createdAt
+
+    DashboardStats:
+      type: object
+      properties:
+        totalPatients:
+          type: integer
+        visitsToday:
+          type: integer
+        urgentCasesToday:
+          type: integer
+        visitsThisWeek:
+          type: integer
+        referralsThisWeek:
+          type: integer
+      required:
+        - totalPatients
+        - visitsToday
+        - urgentCasesToday
+        - visitsThisWeek
+        - referralsThisWeek
+
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
