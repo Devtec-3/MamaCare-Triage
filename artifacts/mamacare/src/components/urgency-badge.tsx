@@ -17,7 +17,7 @@ const badgeVariants = cva(
   }
 );
 
-interface UrgencyBadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
+interface UrgencyBadgeProps extends React.HTMLAttributes<HTMLDivElement>, Omit<VariantProps<typeof badgeVariants>, 'urgency'> {
   urgency: string;
 }
 

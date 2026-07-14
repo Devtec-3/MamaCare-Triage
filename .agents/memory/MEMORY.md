@@ -1,0 +1,1 @@
+- [Pre-push typecheck gate](pre-push-typecheck.md) — always run tsc --noEmit in both mamacare and api-server before committing; dev preview passes but strict build fails silently.
