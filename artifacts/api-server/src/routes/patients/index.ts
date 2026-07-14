@@ -50,7 +50,10 @@ router.post("/patients", async (req, res): Promise<void> => {
 
   const [patient] = await db
     .insert(patientsTable)
-    .values(parsed.data)
+    .values({
+      ...parsed.data,
+      weightKg: parsed.data.weightKg != null ? String(parsed.data.weightKg) : undefined,
+    })
     .returning();
 
   res.status(201).json(CreatePatientResponse.parse(mapPatient(patient)));
@@ -105,7 +108,10 @@ router.patch("/patients/:id", async (req, res): Promise<void> => {
 
   const [patient] = await db
     .update(patientsTable)
-    .set(parsed.data)
+    .set({
+      ...parsed.data,
+      weightKg: parsed.data.weightKg != null ? String(parsed.data.weightKg) : undefined,
+    })
     .where(eq(patientsTable.id, params.data.id))
     .returning();
 

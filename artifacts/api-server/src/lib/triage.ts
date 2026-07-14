@@ -163,9 +163,9 @@ export async function runTriage(input: TriageInput): Promise<TriageResult> {
 
   const response = await ai.models.generateContent({
     model: "gemma-4-26b-a4b-it",
-    systemInstruction: SYSTEM_INSTRUCTION,
     contents: [{ role: "user", parts }],
     config: {
+      systemInstruction: SYSTEM_INSTRUCTION,
       maxOutputTokens: 8192,
     },
   });
