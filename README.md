@@ -15,9 +15,9 @@ Built for the *Build with Gemma 4: GenAI for SDGs* Hackathon — Kwara State Uni
 
 ## THE PROBLEM
 
-Rural clinics in Nigeria are often staffed by community health workers (CHWs) rather than doctors, with unreliable internet access and thin drug stock. Maternal and newborn mortality remains one of the most severe gaps under SDG 3 — frequently driven not by a lack of willingness to act, but by delayed recognition of danger signs.
+Rural clinics in Nigeria are often staffed by community health workers (CHWs) rather than doctors, with unreliable internet access and thin drug stock. Maternal and newborn mortality remains one of the most severe gaps under SDG 3 , frequently driven not by a lack of willingness to act, but by delayed recognition of danger signs.
 
-Existing AI health tools don't fit this reality. Most are text-only, single-turn chatbots that assume constant connectivity and English literacy — none of which hold in a rural clinic.
+Existing AI health tools don't fit this reality. Most are text-only, single-turn chatbots that assume constant connectivity and English literacy  none of which hold in a rural clinic.
 
 **MamaCare Triage** closes that gap directly, using Gemma 4 as the reasoning core of an agent that goes beyond advice into real, actionable output.
 
